@@ -1,0 +1,30 @@
+﻿@model List<Contatos.Models.Contato>
+
+<div>
+    <a href="/contato">Adicionar novo contato</a>
+    <br>
+    <br>
+    <form method="get">
+        <input type="text" id="search" name="search" placeholder="Pesquisar Contatos">
+        <button type="submit">Buscar</button>
+    </form>
+    <hr>
+
+    @foreach (var contato in Model)
+    {
+        <div>
+            <h2>@contato.Nome</h2>
+
+            @if (contato.Telefones.Any())
+            {
+                <p>@string.Join(", ", contato.Telefones.Select(t => t.Numero))</p>
+            }
+
+            <form method="post" action="/contato/delete/@contato.Id">
+                <button type="submit">Excluir</button>
+            </form>
+            <a href="/contato/@contato.Id">Editar</a>
+            <hr>
+        </div>
+    }
+</div>

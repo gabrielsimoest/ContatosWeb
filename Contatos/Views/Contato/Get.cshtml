@@ -1,0 +1,57 @@
+﻿@using Contatos.Models
+@model Contatos.Models.Contato
+
+<a href="/Home">Voltar</a>
+
+<h2>Contato</h2>
+
+<form method="post" action="@(Model.Id == 0 ? "/contato" : "/contato/update")">
+    <input type="hidden" name="Id" value="@Model.Id" />
+
+    <div>
+        <label for="nome">Nome</label>
+        <input type="text" id="nome" name="Nome" value="@Model.Nome" required />
+    </div>
+
+    <div>
+        <label for="idade">Idade</label>
+        <input type="number" id="idade" name="Idade" value="@Model.Idade" required />
+    </div>
+
+    <br>
+
+    <button type="submit">Salvar</button>
+</form>
+
+@if (Model.Id != 0)
+{
+
+    <form method="post" action="/telefone">
+        <input type="hidden" name="ContatoId" value="@Model.Id" />
+
+        <div>
+            <label for="Telefone">Numero</label>
+            <input type="text" id="Numero" name="Numero" required />
+        </div>
+        <br>
+
+        <button type="submit">Adicionar Telefone</button>
+    </form>
+
+    <div>
+        <hr>
+
+        @foreach (Telefone telefone in ViewBag.Telefones)
+        {
+            <div>
+                <h2>@telefone.Numero</h2>
+                <form method="post" action="/telefone/delete/telefone.Id">
+                    <button type="submit">Excluir</button>
+                </form>
+                <hr>
+            </div>
+        }
+    </div>
+}
+
+
